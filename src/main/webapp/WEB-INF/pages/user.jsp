@@ -24,7 +24,7 @@
             <a href="${pageContext.request.contextPath}/login" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
         </nav>
     </div>
-
+	
     <div class="main-content">
         <header>
             <div class="header-content">
@@ -84,6 +84,33 @@
                         </tr>
                     </thead>
                     <tbody>
+                    	 <c:forEach var="user" items="${userList}">
+            <tr>
+                <td>${user.userId}</td>
+                <td>${user.firstName}</td>
+                <td>${user.lastName}</td>
+                <td>${user.username}</td>
+                <td>${user.email}</td>
+                <td>
+                    <span class="${user.status == 'Active' ? 'status-active' : 'status-inactive'}">
+                        ${user.status}
+                    </span>
+                </td>
+                <td>
+                    <div class="action-buttons">
+                        <a href="${pageContext.request.contextPath}/user/editUser?id=${user.userId}" class="edit-btn">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <form action="${pageContext.request.contextPath}/user/deleteUser" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="${user.userId}">
+                            <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this user?')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        </c:forEach>
                         <tr>
                             <td>1</td>
                             <td>Lux</td>
