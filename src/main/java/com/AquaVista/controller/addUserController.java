@@ -1,4 +1,4 @@
-package com.AquaVista.model;
+package com.AquaVista.controller;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -8,16 +8,16 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Servlet implementation class StudentModel
+ * Servlet implementation class userAddController
  */
-@WebServlet("/StudentModel")
-public class StudentModel extends HttpServlet {
+@WebServlet(asyncSupported = true, urlPatterns = {"/userAdd"})
+public class addUserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public StudentModel() {
+    public addUserController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -27,7 +27,7 @@ public class StudentModel extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		request.getRequestDispatcher("/WEB-INF/pages/addUser.jsp").forward(request, response);
 	}
 
 	/**

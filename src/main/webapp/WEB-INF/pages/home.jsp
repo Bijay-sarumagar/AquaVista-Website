@@ -12,56 +12,56 @@
 
 <body>
 	<header class="main-header">
-	    <div class="header-container">
-	        <div class="logo">
-	            <i class="fas fa-fish"></i>
-	            <span>AquaVista</span>
-	        </div>
-	        <nav class="main-nav">
-	            <ul>
-	                <li><a href="${pageContext.request.contextPath}/home" class="active">Home</a></li>
-	                <li><a href="#">Shop</a></li>
-	                <li><a href="#">Species</a></li>
-	                <li><a href="#">Aquariums</a></li>
-	                <li><a href="#">Guides</a></li>
-	                <li><a href="#">About Us</a></li>
-	            </ul>
-	        </nav>
-	        <div class="nav-buttons">
-	            <a href="#" class="icon-btn">
-	                <i class="fas fa-search"></i>
-	            </a>
-	            <a href="#" class="icon-btn">
-	                <i class="fas fa-shopping-cart"></i>
-	                <span class="badge">0</span>
-	            </a>
-	
-	            <!-- Dynamically show username with logout button or Login button based on session -->
-	            <%
-	                String username = (session != null) ? (String) session.getAttribute("username") : null;
-	                if (username != null) {
-	            %>
-	                <a href="${pageContext.request.contextPath}/profile" class="profile-link">
-	                    <i class="fas fa-user"></i>
-	                    <%= username %>
-	                </a>
-	                <a href="${pageContext.request.contextPath}/login" class="logout-btn">
-	                    <i class="fas fa-sign-out-alt"></i>
-	                    <span class="login-text">Logout</span>
-	                </a>
-	            <%
-	                } else {
-	            %>
-	                <a href="${pageContext.request.contextPath}/login" class="login-btn">
-	                    <i class="fas fa-sign-in-alt"></i>
-	                    <span class="login-text">Login</span>
-	                </a>
-	            <%
-	                }
-	            %>
-	        </div>
-	    </div>
-	</header>
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-fish"></i>
+                <span>AquaVista</span>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="${pageContext.request.contextPath}/home" class="active">Home</a></li>
+                    <li><a href="#">Shop</a></li>
+                    <li><a href="#">Species</a></li>
+                    <li><a href="#">Aquariums</a></li>
+                    <li><a href="#">Guides</a></li>
+                    <li><a href="#">About Us</a></li>
+                </ul>
+            </nav>
+            <div class="nav-buttons">
+                <a href="#" class="icon-btn">
+                    <i class="fas fa-search"></i>
+                </a>
+                <a href="#" class="icon-btn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="badge">0</span>
+                </a>
+
+                <!-- Dynamically show username with logout button or Login button based on session -->
+                <%
+                    String username = (session != null) ? (String) session.getAttribute("username") : null;
+                    if (username != null) {
+                %>
+                    <a href="${pageContext.request.contextPath}/profile" class="profile-link">
+                        <i class="fas fa-user"></i>
+                        <%= username %>
+                    </a>
+                    <a href="${pageContext.request.contextPath}/login" class="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span class="login-text">Logout</span>
+                    </a>
+                <%
+                    } else {
+                %>
+                    <a href="${pageContext.request.contextPath}/login" class="login-btn">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span class="login-text">Login</span>
+                    </a>
+                <%
+                    }
+                %>
+            </div>
+        </div>
+    </header>
 
     <section class="hero">
         <div class="hero-content">
@@ -115,25 +115,25 @@
             <div class="category-grid">
                 <a href="#" class="category-card">
                     <div class="category-image">
-                        <div class="category-placeholder"></div>
+                        <img alt="Freshwater Fish" src="${pageContext.request.contextPath}/resources/images/freshwater-fish.jpg" />
                     </div>
                     <h3>Freshwater Fish</h3>
                 </a>
                 <a href="#" class="category-card">
                     <div class="category-image">
-                        <div class="category-placeholder"></div>
+                        <img alt="Saltwater Fish" src="${pageContext.request.contextPath}/resources/images/saltwater-fish.jpg" />
                     </div>
                     <h3>Saltwater Fish</h3>
                 </a>
                 <a href="#" class="category-card">
                     <div class="category-image">
-                        <div class="category-placeholder"></div>
+                        <img alt="Aquatic Plants" src="${pageContext.request.contextPath}/resources/images/aquatic-plants.jpg" />
                     </div>
                     <h3>Aquatic Plants</h3>
                 </a>
                 <a href="#" class="category-card">
                     <div class="category-image">
-                        <div class="category-placeholder"></div>
+                        <img alt="Aquariums & Tanks" src="${pageContext.request.contextPath}/resources/images/aquariums-tanks.jpg" />
                     </div>
                     <h3>Aquariums & Tanks</h3>
                 </a>
@@ -151,7 +151,7 @@
                 <div class="product-card">
                     <div class="product-badge">New</div>
                     <div class="product-image">
-                        <div class="product-placeholder"></div>
+                        <img alt="Betta Fish" src="${pageContext.request.contextPath}/resources/images/products/betta-fish.jpg" />
                     </div>
                     <div class="product-info">
                         <h3>Betta Fish - Male</h3>
@@ -173,7 +173,7 @@
                 </div>
                 <div class="product-card">
                     <div class="product-image">
-                        <div class="product-placeholder"></div>
+                        <img alt="Clownfish Pair" src="${pageContext.request.contextPath}/resources/images/products/clownfish.jpg" />
                     </div>
                     <div class="product-info">
                         <h3>Clownfish Pair</h3>
@@ -195,7 +195,7 @@
                 <div class="product-card">
                     <div class="product-badge">Popular</div>
                     <div class="product-image">
-                        <div class="product-placeholder"></div>
+                        <img alt="Angelfish" src="${pageContext.request.contextPath}/resources/images/products/angelfish.jpg" />
                     </div>
                     <div class="product-info">
                         <h3>Angelfish - Medium</h3>
@@ -217,7 +217,7 @@
                 </div>
                 <div class="product-card">
                     <div class="product-image">
-                        <div class="product-placeholder"></div>
+                        <img alt="Aquarium Starter Kit" src="${pageContext.request.contextPath}/resources/images/products/aquarium-kit.jpg" />
                     </div>
                     <div class="product-info">
                         <h3>Aquarium Starter Kit - 20 Gal</h3>
@@ -299,7 +299,7 @@
                     <p class="testimonial-text">"The fish arrived in perfect condition. Their colors are vibrant and they acclimated well to my tank. The packaging was secure and professional."</p>
                     <div class="testimonial-author">
                         <div class="author-avatar">
-                            <div class="avatar-placeholder"></div>
+                            <img alt="Sarah Johnson" src="${pageContext.request.contextPath}/resources/images/testimonials/user1.jpg" />
                         </div>
                         <div class="author-info">
                             <h4>Sarah Johnson</h4>
@@ -318,7 +318,7 @@
                     <p class="testimonial-text">"AquaVista has the best selection of aquarium plants I've found. Everything arrived healthy and has been growing beautifully in my tank."</p>
                     <div class="testimonial-author">
                         <div class="author-avatar">
-                            <div class="avatar-placeholder"></div>
+                            <img alt="David Chen" src="${pageContext.request.contextPath}/resources/images/testimonials/user2.jpg" />
                         </div>
                         <div class="author-info">
                             <h4>David Chen</h4>
@@ -337,7 +337,7 @@
                     <p class="testimonial-text">"Customer service was exceptional. They helped me diagnose an issue with my tank and recommended the perfect solution. Will definitely shop here again!"</p>
                     <div class="testimonial-author">
                         <div class="author-avatar">
-                            <div class="avatar-placeholder"></div>
+                            <img alt="Michael Rodriguez" src="${pageContext.request.contextPath}/resources/images/testimonials/user3.jpg" />
                         </div>
                         <div class="author-info">
                             <h4>Michael Rodriguez</h4>

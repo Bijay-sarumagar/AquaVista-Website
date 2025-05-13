@@ -8,57 +8,8 @@
     <title>AquaVista - Login</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/login.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <style>
-        .error-message {
-            color: red;
-            font-size: 0.9em;
-            margin-top: 5px;
-            display: none; 
-        }
-
-        .input-group.invalid input {
-            border-color: red;
-        }	
-    </style>
-    <script>
-        // JavaScript function to validate the login form
-        function validateLoginForm(event) {
-            let isValid = true;
-
-            // Get form fields
-            const usernameField = document.getElementById("username");
-            const passwordField = document.getElementById("password");
-
-            // Get error message elements
-            const usernameError = document.getElementById("username-error");
-            const passwordError = document.getElementById("password-error");
-
-            // Clear previous error messages
-            usernameError.style.display = "none";
-            passwordError.style.display = "none";
-            usernameField.classList.remove("invalid");
-            passwordField.classList.remove("invalid");
-
-            // Validate username field
-            if (usernameField.value.trim() === "") {
-                usernameError.style.display = "block";
-                usernameField.classList.add("invalid");
-                isValid = false;
-            }
-
-            // Validate password field
-            if (passwordField.value.trim() === "") {
-                passwordError.style.display = "block";
-                passwordField.classList.add("invalid");
-                isValid = false;
-            }
-
-            // Prevent form submission if validation fails
-            if (!isValid) {
-                event.preventDefault();
-            }
-        }
-    </script>
+    
+ 
 </head>
 
 <body>

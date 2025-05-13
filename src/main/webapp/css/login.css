@@ -141,6 +141,17 @@ body {
     text-decoration: none;
 }
 
+.error-message {
+            color: red;
+            font-size: 0.9em;
+            margin-top: 5px;
+            display: none; 
+        }
+
+        .input-group.invalid input {
+            border-color: red;
+        }
+
 /* Media Queries */
 @media screen and (max-width: 768px) {
     .main-container {
