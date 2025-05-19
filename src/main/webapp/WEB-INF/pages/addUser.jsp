@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,6 +12,15 @@
 </head>
 
 <body>
+
+    <!-- Alert popup if success or error message exists -->
+    <c:if test="${not empty successMessage}">
+        <script>alert("${successMessage}");</script>
+    </c:if>
+    <c:if test="${not empty errorMessage}">
+        <script>alert("${errorMessage}");</script>
+    </c:if>
+
     <div class="sidebar">
         <div class="logo">
             <i class="fas fa-fish"></i> AquaVista
@@ -46,7 +56,7 @@
         <div class="add-user-container">
             <div class="form-card">
                 <h2><i class="fas fa-user-plus"></i> Create New User</h2>
-                <form action="${pageContext.request.contextPath}/saveUser" method="post" class="add-user-form">
+                <form action="${pageContext.request.contextPath}/addUser" method="post" class="add-user-form">
                     <div class="form-row">
                         <div class="form-group">
                             <label for="firstName">First Name</label>
@@ -57,31 +67,31 @@
                             <input type="text" id="lastName" name="lastName" required>
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="username">Username</label>
                         <input type="text" id="username" name="username" required>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input type="email" id="email" name="email" required>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="password">Password</label>
                         <input type="password" id="password" name="password" required>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="role">User Role</label>
                         <select id="role" name="role" required>
                             <option value="">Select a role</option>
                             <option value="admin">Admin</option>
-                            <option value="user">Standard User</option>
+                            <option value="customer">Customer</option>
                         </select>
                     </div>
-                    
+
                     <div class="form-actions">
                         <button type="button" class="cancel-btn" onclick="window.location.href='${pageContext.request.contextPath}/user'">
                             <i class="fas fa-times"></i> Cancel
@@ -101,7 +111,7 @@
                 <a href="#">Terms Of Use</a>
             </div>
             <div class="footer-right">
-                © 2025 AquaVista. All Rights Reserved
+                Â© 2025 AquaVista. All Rights Reserved
             </div>
         </div>
     </div>

@@ -1,41 +1,36 @@
 package com.AquaVista.controller;
 
-import jakarta.servlet.ServletException;
+import com.AquaVista.model.userModel;
+import com.AquaVista.service.UserService;
+import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import jakarta.servlet.http.*;
 
-/**
- * Servlet implementation class userManage
- */
-@WebServlet(asyncSupported = true, urlPatterns = {"/user"})
+import java.io.IOException;
+import java.util.List;
+
+@WebServlet("/user")
 public class userController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public userController() {
-        super();
-        // TODO Auto-generated constructor stub
+    private final UserService userService = new UserService();
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        // Fetch all users
+        List<userModel> userList = userService.getAllUsers();
+
+        // Pass the list to the JSP
+        request.setAttribute("userList", userList);
+
+        // Internally forward to JSP page (not exposed in URL)
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/pages/user.jsp");
+        dispatcher.forward(request, response);
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		request.getRequestDispatcher("/WEB-INF/pages/user.jsp").forward(request, response);
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
-
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        doGet(request, response);
+    }
 }

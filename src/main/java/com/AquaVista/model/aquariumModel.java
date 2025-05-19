@@ -1,17 +1,12 @@
 package com.AquaVista.model;
 
-public class aquariumModel {
-	private int aquariumId;
+public class AquariumModel {
+    private int aquariumId;
     private String name;
     private String description;
     private double size;
     private int ownerId;
 
-    // Constructor
-    public aquariumModel() {
-    }
-
-    // Getters and Setters
     public int getAquariumId() {
         return aquariumId;
     }
@@ -51,5 +46,4 @@ public class aquariumModel {
     public void setOwnerId(int ownerId) {
         this.ownerId = ownerId;
     }
-
 }

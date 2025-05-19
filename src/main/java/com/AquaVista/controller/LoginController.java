@@ -42,8 +42,8 @@ public class LoginController extends HttpServlet {
             // Establish database connection
             connection = DbConfig.getDbConnection();
 
-            // SQL query to fetch the password for the given username
-            String sql = "SELECT password FROM user WHERE username = ?";
+            // SQL query to fetch password and role for the given username
+            String sql = "SELECT password, role FROM user WHERE username = ?";
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, username);
 
@@ -51,16 +51,23 @@ public class LoginController extends HttpServlet {
             resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                // Retrieve the password from the database
                 String storedPassword = resultSet.getString("password");
+                String role = resultSet.getString("role");
 
                 // Compare the entered password with the stored password
                 if (password.equals(storedPassword)) {
-                    // Password matches, create a session and redirect to /home
+                    // Password matches, create session
                     HttpSession session = request.getSession();
                     session.setAttribute("username", username);
-                    response.sendRedirect(request.getContextPath() + "/home");
-                    return; // Exit the method after successful login
+                    session.setAttribute("role", role);
+
+                    // Redirect based on role
+                    if ("admin".equalsIgnoreCase(role)) {
+                        response.sendRedirect(request.getContextPath() + "/admin");
+                    } else {
+                        response.sendRedirect(request.getContextPath() + "/home");
+                    }
+                    return; // Stop further processing
                 } else {
                     // Password does not match
                     request.setAttribute("error", "Invalid username or password.");
@@ -83,7 +90,7 @@ public class LoginController extends HttpServlet {
             }
         }
 
-        // Forward back to the login page with the error message
+        // Forward back to login page with error
         request.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(request, response);
     }
 }

@@ -1,18 +1,19 @@
 package com.AquaVista.model;
 
 public class userModel {
-	private int userId;
+    private int userId;
     private String firstName;
     private String lastName;
     private String username;
     private String email;
     private String password;
+    private String role;
 
     // Constructor
-    public userModel() {
-    }
+    public userModel() {}
 
     // Getters and Setters
+
     public int getUserId() {
         return userId;
     }
@@ -59,5 +60,13 @@ public class userModel {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

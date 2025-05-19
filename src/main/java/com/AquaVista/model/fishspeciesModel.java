@@ -1,16 +1,12 @@
 package com.AquaVista.model;
 
 public class fishspeciesModel {
-	private int speciesId;
+    private int speciesId;
     private String name;
     private String type;
     private String careLevel;
     private String temperatureRange;
     private String phRange;
-
-    // Constructor
-    public fishspeciesModel() {
-    }
 
     // Getters and Setters
     public int getSpeciesId() {

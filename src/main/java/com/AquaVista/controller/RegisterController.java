@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import com.AquaVista.config.DbConfig;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -22,13 +21,15 @@ public class RegisterController extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Forward to the registration JSP page
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         request.getRequestDispatcher("/WEB-INF/pages/register.jsp").forward(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         String email = request.getParameter("email");
@@ -39,20 +40,17 @@ public class RegisterController extends HttpServlet {
         PreparedStatement preparedStatement = null;
 
         try {
-            // Validate inputs
+            // Validate input
             String validationError = validateInputs(firstName, lastName, email, username, password);
             if (validationError != null) {
                 handleError(request, response, validationError);
                 return;
             }
 
-            // Establish database connection
+            // DB connection
             connection = DbConfig.getDbConnection();
 
-            // SQL query to insert user data
-            String sql = "INSERT INTO user (first_name, last_name, email, username, password) VALUES (?, ?, ?, ?, ?)";
-
-            // Create and populate PreparedStatement
+            String sql = "INSERT INTO user (first_name, last_name, email, username, password, role) VALUES (?, ?, ?, ?, ?, 'customer')";
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, firstName);
             preparedStatement.setString(2, lastName);
@@ -60,20 +58,19 @@ public class RegisterController extends HttpServlet {
             preparedStatement.setString(4, username);
             preparedStatement.setString(5, password);
 
-            // Execute the query
             int rowsInserted = preparedStatement.executeUpdate();
 
             if (rowsInserted > 0) {
-                // Successful registration, redirect to login page
-                handleSuccess(request, response, "Your account has been successfully created!", "/WEB-INF/pages/login.jsp");
+                request.getSession().setAttribute("message", "User registered successfully!");
+                response.sendRedirect(request.getContextPath() + "/login");
             } else {
-                handleError(request, response, "Registration failed. Please try again later.");
+                handleError(request, response, "Registration failed. Try again.");
             }
-        } catch (ClassNotFoundException | SQLException e) {
+
+        } catch (Exception e) {
             e.printStackTrace();
-            handleError(request, response, "An error occurred: " + e.getMessage());
+            handleError(request, response, "Error: " + e.getMessage());
         } finally {
-            // Close resources
             try {
                 if (preparedStatement != null) preparedStatement.close();
                 if (connection != null) connection.close();
@@ -83,47 +80,18 @@ public class RegisterController extends HttpServlet {
         }
     }
 
-    /**
-     * Validates the form inputs.
-     */
     private String validateInputs(String firstName, String lastName, String email, String username, String password) {
-        if (firstName == null || firstName.trim().isEmpty()) {
-            return "First Name is required.";
-        }
-        if (lastName == null || lastName.trim().isEmpty()) {
-            return "Last Name is required.";
-        }
-        if (email == null || email.trim().isEmpty() || !email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
-            return "A valid Email is required.";
-        }
-        if (username == null || username.trim().isEmpty()) {
-            return "Username is required.";
-        }
-        if (password == null || password.trim().isEmpty() || password.length() < 8) {
-            return "Password is required and must be at least 8 characters long.";
-        }
-        return null; // No validation errors
+        if (firstName == null || firstName.isEmpty()) return "First name required.";
+        if (lastName == null || lastName.isEmpty()) return "Last name required.";
+        if (email == null || !email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) return "Valid email required.";
+        if (username == null || username.isEmpty()) return "Username required.";
+        if (password == null || password.length() < 8) return "Password must be at least 8 characters.";
+        return null;
     }
 
-    /**
-     * Handles success scenarios by redirecting or forwarding to the success page.
-     */
-    private void handleSuccess(HttpServletRequest request, HttpServletResponse response, String message, String redirectPage)
+    private void handleError(HttpServletRequest req, HttpServletResponse res, String msg)
             throws ServletException, IOException {
-        request.setAttribute("success", message);
-        request.getRequestDispatcher(redirectPage).forward(request, response);
-    }
-
-    /**
-     * Handles error scenarios by showing a pop-up message and redirecting to the registration page.
-     */
-    private void handleError(HttpServletRequest request, HttpServletResponse response, String message)
-            throws ServletException, IOException {
-        request.setAttribute("error", message);
-        request.setAttribute("firstName", request.getParameter("firstName"));
-        request.setAttribute("lastName", request.getParameter("lastName"));
-        request.setAttribute("email", request.getParameter("email"));
-        request.setAttribute("username", request.getParameter("username"));
-        request.getRequestDispatcher("/WEB-INF/pages/register.jsp").forward(request, response);
+        req.setAttribute("error", msg);
+        req.getRequestDispatcher("/WEB-INF/pages/register.jsp").forward(req, res);
     }
 }

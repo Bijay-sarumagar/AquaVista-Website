@@ -1,239 +1,86 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AquaVista - User Management</title>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/user.css" />
+    <title>User Management</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/user.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        .main-content header {
+            margin-top: 20px;
+        }
+    </style>
 </head>
-
 <body>
-    <div class="sidebar">
-        <div class="logo">
-            <i class="fas fa-fish"></i> AquaVista
+<div class="sidebar">
+    <div class="logo"><i class="fas fa-fish"></i> AquaVista</div>
+    <nav class="navigation">
+        <a href="${pageContext.request.contextPath}/admin"><i class="fas fa-home"></i> Dashboard</a>
+        <a href="${pageContext.request.contextPath}/user" class="active"><i class="fas fa-users"></i> Users</a>
+        <a href="${pageContext.request.contextPath}/aquariums"><i class="fas fa-water"></i> Aquariums</a>
+        <a href="${pageContext.request.contextPath}/fishspecies"><i class="fas fa-flask"></i> Species</a>
+        <a href="#"><i class="fas fa-user"></i> Profile</a>
+        <a href="${pageContext.request.contextPath}/login" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </nav>
+</div>
+
+<div class="main-content">
+    <header>
+        <div class="header-content">
+            <h1>User Management</h1>
+            <div class="user-info">
+                <div class="notifications"><i class="fas fa-bell"></i></div>
+                <div class="user-avatar"><i class="fas fa-user"></i></div>
+                <a href="${pageContext.request.contextPath}/login" class="header-logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
         </div>
-        <nav class="navigation">
-            <a href="${pageContext.request.contextPath}/admin"><i class="fas fa-home"></i> Dashboard</a>
-            <a href="#"><i class="fas fa-search"></i> Analytics</a>
-            <a href="${pageContext.request.contextPath}/user" class="active"><i class="fas fa-users"></i> Users</a>
-            <a href="#"><i class="fas fa-shopping-cart"></i> Orders</a>
-            <a href="#"><i class="fas fa-user"></i> Profile</a>
-            <a href="${pageContext.request.contextPath}/login" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
-        </nav>
+    </header>
+
+    <!-- Add User Button -->
+    <div class="add-user-vertical-container">
+        <a href="${pageContext.request.contextPath}/addUser" class="add-user-vertical-btn">
+            <i class="fas fa-user-plus"></i> Add User
+        </a>
     </div>
-	
-    <div class="main-content">
-        <header>
-            <div class="header-content">
-                <h1>User Management</h1>
-                <div class="search-bar">
-                    <input type="text" placeholder="Search...">
-                    <button><i class="fas fa-search"></i></button>
-                </div>
-                <div class="user-info">
-                    <div class="notifications">
-                        <i class="fas fa-bell"></i>
-                    </div>
-                    <div class="user-avatar">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <a href="${pageContext.request.contextPath}/login" class="header-logout-btn">
-                        <i class="fas fa-sign-out-alt"></i> Logout
-                    </a>
-                </div>
-            </div>
-        </header>
 
-        <div class="user-management">
-            <div class="table-header">
-                <div class="table-controls">
-                    <div class="table-search">
-                        <input type="text" placeholder="Search users...">
-                        <button><i class="fas fa-search"></i></button>
-                    </div>
-                    <select class="dropdown-filter">
-                        <option value="">All Users</option>
-                        <option value="active">Active Users</option>
-                        <option value="inactive">Inactive Users</option>
-                    </select>
-                    <select class="dropdown-filter">
-                        <option value="25">Show 25</option>
-                        <option value="50">Show 50</option>
-                        <option value="100">Show 100</option>
-                    </select>
-                    <a href="${pageContext.request.contextPath}/userAdd" class="add-user-btn">
-                        <i class="fas fa-plus"></i> Add New User
-                    </a>
-                </div>
-            </div>
-
-            <div class="table-container">
-                <table class="user-table">
-                    <thead>
-                        <tr>
-                            <th width="50px">ID</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Username</th>
-                            <th>Email</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    	 <c:forEach var="user" items="${userList}">
+    <!-- User Table -->
+    <div class="table-container">
+        <table class="user-table">
+            <thead>
             <tr>
-                <td>${user.userId}</td>
-                <td>${user.firstName}</td>
-                <td>${user.lastName}</td>
-                <td>${user.username}</td>
-                <td>${user.email}</td>
-                <td>
-                    <span class="${user.status == 'Active' ? 'status-active' : 'status-inactive'}">
-                        ${user.status}
-                    </span>
-                </td>
-                <td>
-                    <div class="action-buttons">
-                        <a href="${pageContext.request.contextPath}/user/editUser?id=${user.userId}" class="edit-btn">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <form action="${pageContext.request.contextPath}/user/deleteUser" method="post" style="display:inline;">
+                <th>ID</th>
+                <th>First</th>
+                <th>Last</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach var="user" items="${userList}">
+                <tr>
+                    <td>${user.userId}</td>
+                    <td>${user.firstName}</td>
+                    <td>${user.lastName}</td>
+                    <td>${user.username}</td>
+                    <td>${user.email}</td>
+                    <td>
+                        <a href="editUser?id=${user.userId}" class="edit-btn"><i class="fas fa-edit"></i></a>
+                        <form action="deleteUser" method="post" style="display:inline;">
                             <input type="hidden" name="id" value="${user.userId}">
-                            <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this user?')">
+                            <button type="submit" class="delete-btn" onclick="return confirm('Delete this user?')">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </form>
-                    </div>
-                </td>
-            </tr>
-        </c:forEach>
-                        <tr>
-                            <td>1</td>
-                            <td>Lux</td>
-                            <td>Smith</td>
-                            <td>lux</td>
-                            <td>lux@gmail.com</td>
-                            <td><span class="status-active">Active</span></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <a href="${pageContext.request.contextPath}/user/editUser?id=1" class="edit-btn"><i class="fas fa-edit"></i></a>
-                                    <button class="delete-btn"><i class="fas fa-trash"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Briar</td>
-                            <td>Wilson</td>
-                            <td>briar</td>
-                            <td>briar20@gmail.com</td>
-                            <td><span class="status-active">Active</span></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <a href="${pageContext.request.contextPath}/user/editUser?id=2" class="edit-btn"><i class="fas fa-edit"></i></a>
-                                    <button class="delete-btn"><i class="fas fa-trash"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Clove</td>
-                            <td>Brown</td>
-                            <td>clove</td>
-                            <td>clove@gmail.com</td>
-                            <td><span class="status-active">Active</span></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <a href="${pageContext.request.contextPath}/user/editUser?id=3" class="edit-btn"><i class="fas fa-edit"></i></a>
-                                    <button class="delete-btn"><i class="fas fa-trash"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Caitlyn</td>
-                            <td>Lee</td>
-                            <td>caitlyn</td>
-                            <td>caitlyn@gmail.com</td>
-                            <td><span class="status-active">Active</span></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <a href="${pageContext.request.contextPath}/user/editUser?id=4" class="edit-btn"><i class="fas fa-edit"></i></a>
-                                    <button class="delete-btn"><i class="fas fa-trash"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>Diana</td>
-                            <td>Becker</td>
-                            <td>diana</td>
-                            <td>diana@gmail.com</td>
-                            <td><span class="status-inactive">Inactive</span></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <a href="${pageContext.request.contextPath}/user/editUser?id=5" class="edit-btn"><i class="fas fa-edit"></i></a>
-                                    <button class="delete-btn"><i class="fas fa-trash"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td>John</td>
-                            <td>Doe</td>
-                            <td>johndoe</td>
-                            <td>johndoe@gmail.com</td>
-                            <td><span class="status-inactive">Inactive</span></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <a href="${pageContext.request.contextPath}/user/editUser?id=6" class="edit-btn"><i class="fas fa-edit"></i></a>
-                                    <button class="delete-btn"><i class="fas fa-trash"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>7</td>
-                            <td>Jane</td>
-                            <td>Smith</td>
-                            <td>janesmith</td>
-                            <td>janesmith@gmail.com</td>
-                            <td><span class="status-inactive">Inactive</span></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <a href="${pageContext.request.contextPath}/user/edit?id=7" class="edit-btn"><i class="fas fa-edit"></i></a>
-                                    <button class="delete-btn"><i class="fas fa-trash"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="pagination">
-                <button><i class="fas fa-angle-double-left"></i></button>
-                <button><i class="fas fa-angle-left"></i></button>
-                <button class="active">1</button>
-                <button>2</button>
-                <button>3</button>
-                <button><i class="fas fa-angle-right"></i></button>
-                <button><i class="fas fa-angle-double-right"></i></button>
-            </div>
-        </div>
-
-        <div class="footer">
-            <div class="footer-left">
-                <a href="#">About Us</a>
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms Of Use</a>
-            </div>
-            <div class="footer-right">
-                © 2025 AquaVista. All Rights Reserved
-            </div>
-        </div>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
     </div>
+</div>
 </body>
 </html>
